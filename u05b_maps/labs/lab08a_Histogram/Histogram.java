@@ -1,4 +1,4 @@
-//© A+ Computer Science  -  www.apluscompsci.com
+//ï¿½ A+ Computer Science  -  www.apluscompsci.com
 //Name -
 //Date -
 //Class -
@@ -6,7 +6,6 @@
 
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Scanner;
 
 public class Histogram
 {
@@ -14,20 +13,32 @@ public class Histogram
 
 	public Histogram()
 	{
+		histogram = new TreeMap<String,Integer>();
 	}
 
 	public Histogram(String sent)
 	{
-	}
-	
-	public void setSentence()
-	{
+		histogram = new TreeMap<String,Integer>();
+		String[] words = sent.split(" ");
+		for(String word : words){
+			if(!histogram.containsKey(word)){
+				histogram.put(word, 1);
+			}else{
+				histogram.put(word, histogram.get(word) + 1);
+			}
+		}
 	}
 
 	public String toString()
 	{
 		String output="";
-		String allStars="";
-		return output+"\n\n";
+		for(String key : histogram.keySet()){
+			output += key + "\t";
+			for(int i=0; i<histogram.get(key); i++){
+				output += "*";
+			}
+			output += "\n";
+		}
+		return output;
 	}
 }
