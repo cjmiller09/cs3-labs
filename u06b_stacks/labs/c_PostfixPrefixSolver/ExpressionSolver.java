@@ -5,8 +5,7 @@
 //Lab  -
 
 import java.util.Stack;
-import java.util.Scanner;
-import static java.lang.System.*;
+
 
 public class ExpressionSolver
 {
@@ -18,12 +17,29 @@ public class ExpressionSolver
                a supported operator.
    **/
    private static double calc(double one, double two, String op) {
-   
+      if(op.equals("+")) {
+         return one + two;
+      }
+      else if(op.equals("-")) {
+         return one - two;
+      }
+      else if(op.equals("*")) {
+         return one * two;
+      }
+      else if(op.equals("/")) {
+         return one / two;
+      }
+      else {
+         throw new UnsupportedOperationException("Unsupported operator: " + op);
+      }
    }
 
    /*** Postfix Evaluator ***/   
    public static double solvePostfix(String expression) {
-   
+      Stack<Character> postfix = new Stack<>();
+      while(expression.length() > 0){
+         char val = expression.charAt(0);
+      }
       return 0.0;
    } 
         
