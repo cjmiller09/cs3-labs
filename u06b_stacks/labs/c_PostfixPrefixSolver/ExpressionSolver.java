@@ -29,6 +29,9 @@ public class ExpressionSolver
       else if(op.equals("/")) {
          return one / two;
       }
+      else if(op.equals("^")) {
+         return Math.pow(one, two);
+      }
       else {
          throw new UnsupportedOperationException("Unsupported operator: " + op);
       }
@@ -36,18 +39,46 @@ public class ExpressionSolver
 
    /*** Postfix Evaluator ***/   
    public static double solvePostfix(String expression) {
-      Stack<Character> postfix = new Stack<>();
-      while(expression.length() > 0){
-         char val = expression.charAt(0);
+      Stack<Double> stack = new Stack<>();
+      String[] tokens = expression.trim().split("\\s+");
+      
+      for (String token : tokens) {
+         if (token.isEmpty()) continue;
+         
+         // Check if the token is a number
+         if (isNumber(token)) {
+               stack.push(Double.parseDouble(token));
+         } 
+         else {
+               // It's an operator (+, -, *, /)
+               double two = stack.pop();
+               double one = stack.pop();
+               double result = calc(one, two, token);
+               stack.push(result);
+         }
       }
-      return 0.0;
-   } 
+      return stack.pop();
+   }
         
    /*** Prefix Evaluator ***/   
    public static double solvePrefix(String expression) {
-   
-      return 0.0;
-   }   
+      Stack<Double> stack = new Stack<>();
+      String[] tokens = expression.trim().split("\\s+");
+      for(int i=tokens.length-1; i>=0; i--){
+         String token = tokens[i];
+         if(token.isEmpty()) continue;
+         if(isNumber(token)){
+            stack.push(Double.parseDouble(token));
+         } 
+         else{
+            double one = stack.pop();
+            double two = stack.pop();
+            double result = calc(one, two, token);
+            stack.push(result);
+         }
+      }
+      return stack.pop();
+   }
    
    //This catches both kinds of exceptions
    //that parseDouble might throw.
